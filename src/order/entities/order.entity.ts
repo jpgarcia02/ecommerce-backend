@@ -16,6 +16,6 @@ export class Order {
   @ManyToOne(() => User, (user) => user.orders)
   user: User;
 
-    @OneToMany(() => OrderItem, (orderItem) => orderItem.order)
+    @OneToMany(() => OrderItem, (orderItem) => orderItem.order,{onDelete: 'CASCADE'})
     orderItems: OrderItem[];
 }

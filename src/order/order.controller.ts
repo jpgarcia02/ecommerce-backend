@@ -10,14 +10,20 @@ import {
 import { OrderService } from './order.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UpdateOrderDto } from './dto/update-order.dto';
+import { AuthGuard } from '@nestjs/passport'
+import { UseGuards } from '@nestjs/common'
+import { GetUserId } from 'src/auth/get-user/get-user.decorator';
 
+@UseGuards(AuthGuard('jwt'))
 @Controller('order')
 export class OrderController {
   constructor(private readonly orderService: OrderService) {}
 
   @Post()
-  create(@Body() createOrderDto: CreateOrderDto) {
-    const userId = 1; // 👈 ⚠️ ID temporal para pruebas. Cambia esto luego por el ID real del token
+  create(@Body() createOrderDto: CreateOrderDto,
+          @GetUserId() userId:number ) {
+        
+    
     return this.orderService.create(createOrderDto, userId);
   }
 
